@@ -38,4 +38,8 @@
     <HintPath>addons/YarnSpinnerGodot/Runtime/DLLs/YarnSpinner.Compiler.dll</HintPath>
   </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="**/*.tres" />
+    <Folder Include="**/*.yarn" />
+  </ItemGroup>
 </Project>
