@@ -6,26 +6,26 @@
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
 
-config_version=4
+config_version=5
 
 [YarnSpinnerGodot]
 
-YarnProjectPaths=PoolStringArray( "res://Samples/Space/Dialogue/Space_YarnProject.tres", "res://Samples/VisualNovel/Dialogue/VisualNovel_YarnProject.tres" )
+YarnProjectPaths=PackedStringArray("res://Samples/Space/Dialogue/Space_YarnProject.tres")
 
 [application]
 
 config/name="YarnSpinner-Godot"
-run/main_scene="res://Samples/VisualNovel/VisualNovelSample.tscn"
+run/main_scene="res://Samples/Space/SpaceSample.tscn"
+config/features=PackedStringArray("4.0")
 boot_splash/image="res://addons/YarnSpinnerGodot/Editor/Icons/YarnSpinnerLogo.png"
-boot_splash/bg_color=Color( 0.0313726, 0.0705882, 0.0313726, 1 )
+boot_splash/bg_color=Color(0.0313726, 0.0705882, 0.0313726, 1)
 config/icon="res://YarnSpinnerLogo.png"
-config/features=PoolStringArray( "4.0", "C#" )
 
 [display]
 
-window/size/resizable=false
 window/size/viewport_width=1600
 window/size/viewport_height=900
+window/size/resizable=false
 
 [dotnet]
 
@@ -33,7 +33,7 @@ project/assembly_name="YarnSpinnerGodot"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/YarnSpinnerGodot/plugin.cfg" )
+enabled=PackedStringArray("res://addons/YarnSpinnerGodot/plugin.cfg")
 
 [gui]
 

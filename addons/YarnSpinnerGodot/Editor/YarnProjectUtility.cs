@@ -67,7 +67,7 @@ namespace Yarn.GodotIntegration.Editor
 
         public void SaveYarnProject(YarnProject project)
         {
-            var saveErr = ResourceSaver.Save( project.ResourcePath,project);
+            var saveErr = ResourceSaver.Save( project, project.ResourcePath);
             if (saveErr != Error.Ok)
             {
                 GD.PushError($"Error updating YarnProject {project.ResourceName} to {project.ResourcePath}: {saveErr}");
@@ -183,7 +183,7 @@ namespace Yarn.GodotIntegration.Editor
                                 break;
                             }
                         }
-                        var serialized = existingDeclaration ?? _editorUtility.InstanceScript<SerializedDeclaration>("res://addons/YarnSpinnerGodot/Runtime/SerializedDeclaration.cs");
+                        var serialized = existingDeclaration ?? new SerializedDeclaration();
                         serialized.SetDeclaration(decl);
                         serialized.ResourceName = serialized.name;
                         return serialized;
@@ -208,7 +208,7 @@ namespace Yarn.GodotIntegration.Editor
             }
             project.ListOfFunctions = newFunctionList.ToArray();
             project.CompiledYarnProgramBase64 = compiledBytes == null ? "" : Convert.ToBase64String(compiledBytes);
-            ResourceSaver.Save(project.ResourcePath,project,  ResourceSaver.SaverFlags.ReplaceSubresourcePaths);
+            ResourceSaver.Save(project, project.ResourcePath);
         }
 
         private static void LogDiagnostic(Diagnostic diagnostic)
@@ -269,7 +269,7 @@ namespace Yarn.GodotIntegration.Editor
                 p[i] = parameters[i].Name;
             }
 
-            var info = _editorUtility.InstanceScript<FunctionInfo>("res://addons/YarnSpinnerGodot/Runtime/FunctionInfo.cs");
+            var info = new FunctionInfo();
             info.Name = method.Name;
             info.ReturnType = returnType;
             info.Parameters = p;
@@ -355,7 +355,7 @@ namespace Yarn.GodotIntegration.Editor
                         existingLocalization = localization;
                     }
                 }
-                var newLocalization = existingLocalization ?? _editorUtility.InstanceScript<Localization>("res://addons/YarnSpinnerGodot/Runtime/Localization.cs");
+                var newLocalization = existingLocalization ?? new Localization();
 
                 newLocalization.Clear();
                 newLocalization.LocaleCode = pair.languageID;
@@ -429,7 +429,7 @@ namespace Yarn.GodotIntegration.Editor
                         && !localization.ResourcePath.Contains("::"))
                     {
                         // only try to save it to disk if it's a standalone file and a sub resource
-                        var saveErr = ResourceSaver.Save( localization.ResourcePath, newLocalization);
+                        var saveErr = ResourceSaver.Save(  newLocalization, localization.ResourcePath);
                         if (saveErr != Error.Ok)
                         {
                             GD.PushError($"Error saving localization {localization.LocaleCode} to {localization.ResourcePath}");
@@ -445,7 +445,7 @@ namespace Yarn.GodotIntegration.Editor
                 // Create one for it now.
                 var stringTableEntries = GetStringTableEntries(project, compilationResult);
 
-                developmentLocalization = _editorUtility.InstanceScript<Localization>("res://addons/YarnSpinnerGodot/Runtime/Localization.cs");
+                developmentLocalization = new Localization();
 
                 developmentLocalization.ResourceName = $"Default ({project.defaultLanguage})";
                 developmentLocalization.LocaleCode = project.defaultLanguage;
@@ -461,7 +461,7 @@ namespace Yarn.GodotIntegration.Editor
                 project.localizations = project.localizations.Concat(new List<Localization>{project.baseLocalization}).ToArray();
 
                 // Since this is the default language, also populate the line metadata.
-                project.lineMetadata =  _editorUtility.InstanceScript<LineMetadata>("res://addons/YarnSpinnerGodot/Runtime/LineMetadata.cs");
+                project.lineMetadata = new LineMetadata();
                 project.lineMetadata.AddMetadata(LineMetadataTableEntriesFromCompilationResult(compilationResult));
             }
         }

@@ -56,7 +56,7 @@ namespace Yarn.GodotIntegration
         /// <returns>An array of each piece of metadata if defined, otherwise returns null.</returns>
         public string[] GetMetadata(string lineID)
         {
-            if (_lineMetadata.Contains(lineID))
+            if (_lineMetadata.ContainsKey(lineID))
             {
                 return _lineMetadata[lineID].ToString().Split(' ');
             }

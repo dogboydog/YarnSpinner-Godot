@@ -2,7 +2,7 @@ using Godot;
 using System;
 using Yarn.GodotIntegration;
 
-public class SpaceSample : Node
+public partial class SpaceSample : Node
 {
     // Declare member variables here. Examples:
     // private int a = 2;

@@ -132,7 +132,7 @@ namespace Yarn.GodotIntegration
             /// </summary>
             OptionView CreateNewOptionView()
             {
-                var optionView = optionViewPrefab.Instance<OptionView>();
+                var optionView = optionViewPrefab.Instantiate<OptionView>();
                 viewControl.AddChild(optionView);
 
                 optionView.OnOptionSelected = OptionViewWasSelected;

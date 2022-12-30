@@ -28,7 +28,7 @@ namespace YarnSpinnerGodot.addons.YarnSpinnerGodot.Editor
             RefreshControlText();
         }
 
-        public override void UpdateProperty()
+        public override void _UpdateProperty()
         {
             // Read the current value from the property.
             var newVariantValue = GetEditedObject().Get(GetEditedProperty());

@@ -58,7 +58,7 @@ namespace Yarn.GodotIntegration{
                 return result;
             }
 
-            if (_stringTable.Contains(key))
+            if (_stringTable.ContainsKey(key))
             {
                 return _stringTable[key].ToString();
             }
@@ -73,7 +73,7 @@ namespace Yarn.GodotIntegration{
         /// <param name="key">The key to search for.</param>
         /// <returns><see langword="true"/> if this Localization has a string
         /// for the given key; <see langword="false"/> otherwise.</returns>
-        public bool ContainsLocalizedString(string key) => _runtimeStringTable.ContainsKey(key) || _stringTable.Contains(key);
+        public bool ContainsLocalizedString(string key) => _runtimeStringTable.ContainsKey(key) || _stringTable.ContainsKey(key);
 
         /// <summary>
         /// Adds a new string to the string table.
@@ -145,7 +145,7 @@ namespace Yarn.GodotIntegration{
 
         public T GetLocalizedObject<T>(string key) where T : Resource
         {
-            if (_assetTable.Contains(key) && _assetTable[key] is T resultAsTargetObject)
+            if (_assetTable.ContainsKey(key) && _assetTable[key] is T resultAsTargetObject)
             {
                 return resultAsTargetObject;
             }
@@ -155,7 +155,7 @@ namespace Yarn.GodotIntegration{
 
         public void SetLocalizedObject<T>(string key, T value) where T : Resource => _assetTable.Add(key, value);
 
-        public bool ContainsLocalizedObject<T>(string key) where T : Resource => _assetTable.Contains(key) && _assetTable[key] is T;
+        public bool ContainsLocalizedObject<T>(string key) where T : Resource => _assetTable.ContainsKey(key) && _assetTable[key] is T;
 
         public void AddLocalizedObject<T>(string key, T value) where T : Resource => _assetTable.Add(key, value);
 

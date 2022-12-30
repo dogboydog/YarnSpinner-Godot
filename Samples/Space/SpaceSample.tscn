@@ -1,15 +1,19 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=4 format=3 uid="uid://ddbq27wcm6emj"]
 
-[ext_resource path="res://addons/YarnSpinnerGodot/Scenes/DialogueRunner.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Samples/Space/Dialogue/Space_YarnProject.tres" type="Resource" id=2]
-[ext_resource path="res://Samples/Space/Scripts/SpaceSample.cs" type="Script" id=3]
+[ext_resource type="PackedScene" uid="uid://dqbd75d2sygjn" path="res://addons/YarnSpinnerGodot/Scenes/DialogueRunner.tscn" id="1"]
+[ext_resource type="Resource" uid="uid://b7cvh4u4o8iiy" path="res://Samples/Space/Dialogue/Space_YarnProject.tres" id="2"]
+[ext_resource type="Script" path="res://Samples/Space/Scripts/SpaceSample.cs" id="3"]
 
 [node name="SpaceDemo" type="Node2D"]
-script = ExtResource( 3 )
+script = ExtResource("3")
 dialogueRunnerPath = NodePath("YarnSpinnerCanvasLayer/DialogueRunner")
 
 [node name="YarnSpinnerCanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="DialogueRunner" parent="YarnSpinnerCanvasLayer" instance=ExtResource( 1 )]
-yarnProject = ExtResource( 2 )
+[node name="DialogueRunner" parent="YarnSpinnerCanvasLayer" instance=ExtResource("1")]
+layout_mode = 3
+anchors_preset = 15
+grow_horizontal = 2
+grow_vertical = 2
+yarnProject = ExtResource("2")
 startNode = "Sally"

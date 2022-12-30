@@ -38,12 +38,12 @@ namespace Yarn.GodotIntegration
 
         public override void _Ready()
         {
-            Connect("pressed", this, nameof(InvokeOptionSelected));
+            Connect("pressed",new Callable(this,nameof(InvokeOptionSelected)));
         }
 
         public override void _ExitTree()
         {
-            Disconnect("pressed", this, nameof(InvokeOptionSelected));
+            Disconnect("pressed",new Callable(this,nameof(InvokeOptionSelected)));
         }
 
         public void InvokeOptionSelected()

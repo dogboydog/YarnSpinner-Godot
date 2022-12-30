@@ -28,21 +28,18 @@ namespace YarnSpinnerGodot.addons.YarnSpinnerGodot
             }
             ProjectSettings.SetInitialValue(YarnProjectUtility.YarnProjectPathsSettingKey, new Godot.Collections.Array());
             // load script resources
-            var scriptImporterScript = ResourceLoader.Load<CSharpScript>("res://addons/YarnSpinnerGodot/editor/YarnImporter.cs");
-            var editorUtilityScript = ResourceLoader.Load<CSharpScript>("res://addons/YarnSpinnerGodot/Editor/YarnEditorUtility.cs");
-            var projectInspectorScript = ResourceLoader.Load<CSharpScript>("res://addons/YarnSpinnerGodot/Editor/YarnProjectInspectorPlugin.cs");
             var localizationScript = ResourceLoader.Load<CSharpScript>("res://addons/YarnSpinnerGodot/Runtime/Localization.cs");
             var yarnProjectScript = ResourceLoader.Load<CSharpScript>("res://addons/YarnSpinnerGodot/Runtime/YarnProject.cs");
             var dialogueRunnerScript = ResourceLoader.Load<CSharpScript>("res://addons/YarnSpinnerGodot/Runtime/DialogueRunner.cs");
 
             // load icons
-            var miniLocalizationIcon = ResourceLoader.Load<Texture>("res://addons/YarnSpinnerGodot/Editor/Icons/Asset Icons/mini_Localization Icon.png");
-            var miniYarnSpinnerIcon = ResourceLoader.Load<Texture>("res://addons/YarnSpinnerGodot/Editor/Icons/mini_YarnSpinnerLogo.png");
-            var miniYarnProjectIcon = ResourceLoader.Load<Texture>("res://addons/YarnSpinnerGodot/Editor/Icons/Asset Icons/mini_YarnProject Icon.png");
+            var miniLocalizationIcon = ResourceLoader.Load<Texture2D>("res://addons/YarnSpinnerGodot/Editor/Icons/Asset Icons/mini_Localization Icon.png");
+            var miniYarnSpinnerIcon = ResourceLoader.Load<Texture2D>("res://addons/YarnSpinnerGodot/Editor/Icons/mini_YarnSpinnerLogo.png");
+            var miniYarnProjectIcon = ResourceLoader.Load<Texture2D>("res://addons/YarnSpinnerGodot/Editor/Icons/Asset Icons/mini_YarnProject Icon.png");
 
-            _scriptImportPlugin = (YarnImporter)scriptImporterScript.New();
-            _editorUtility = (YarnEditorUtility)editorUtilityScript.New();
-            _projectInspectorPlugin = (YarnProjectInspectorPlugin)projectInspectorScript.New();
+            _scriptImportPlugin = new YarnImporter();
+            _editorUtility = new YarnEditorUtility();
+            _projectInspectorPlugin = new YarnProjectInspectorPlugin();
             AddInspectorPlugin(_projectInspectorPlugin);
             AddImportPlugin(_scriptImportPlugin);
             _popup = new PopupMenu();
@@ -50,7 +47,7 @@ namespace YarnSpinnerGodot.addons.YarnSpinnerGodot
             _popup.AddItem("Create Yarn Script", CreateYarnScriptId);
             _popup.AddItem("Create Yarn Project", createYarnProjectID);
             _popup.AddItem("Create Yarn Localization", createYarnLocalizationID);
-            _popup.Connect("id_pressed",this,nameof(OnPopupIDPressed));
+            _popup.Connect("id_pressed", new Callable(this, nameof(OnPopupIDPressed)));
             AddToolSubmenuItem(PopupName, _popup);
             AddCustomType(nameof(DialogueRunner), "Node", dialogueRunnerScript, miniYarnSpinnerIcon);
             AddCustomType(nameof(Localization), "Resource", localizationScript, miniLocalizationIcon);
@@ -115,11 +112,11 @@ namespace YarnSpinnerGodot.addons.YarnSpinnerGodot
         {
             var dialog = new EditorFileDialog();
             dialog.AddFilter(filter);
-            dialog.Mode  = EditorFileDialog.ModeEnum.SaveFile;
-            dialog.WindowTitle= windowTitle;
-            dialog.Connect("file_selected",this,fileSelectedHandler);
+            dialog.FileMode = EditorFileDialog.FileModeEnum.SaveFile;
+            dialog.Title= windowTitle;
+            dialog.Connect("file_selected", new Callable(this, fileSelectedHandler));
             GetEditorInterface().GetViewport().AddChild(dialog);
-            dialog.Popup_(new Rect2(50, 50, 700, 500));
+            dialog.Popup(new Rect2i(50, 50, 700, 500));
         }
         private void CreateYarnProjectDestinationSelected(string destination)
         {

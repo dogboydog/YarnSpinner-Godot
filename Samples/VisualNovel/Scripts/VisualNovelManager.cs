@@ -45,7 +45,7 @@ public partial class VisualNovelManager : Node
             return;
         }
 
-        var texture = ResourceLoader.Load<Texture>(bgShortNameToPath[backgroundImage]);
+        var texture = ResourceLoader.Load<Texture2D>(bgShortNameToPath[backgroundImage]);
         _background.Texture = texture;
     }
     private Dictionary<string, string> audioShortNameToUUID = new Dictionary<string, string>
@@ -69,7 +69,7 @@ public partial class VisualNovelManager : Node
         }
         var stream = ResourceLoader.Load<AudioStream>(audioShortNameToUUID[streamName]);
         var player = new AudioStreamPlayer2D();
-        player.VolumeDb = GD.Linear2Db(volume);
+        player.VolumeDb = GD.LinearToDb(volume);
         player.Stream = stream;
         AddChild(player);
         player.Play();
@@ -102,7 +102,7 @@ public partial class VisualNovelManager : Node
             .Replace(" ", "")
             .Replace("_", "")
             .Replace("-", "");
-        var windowSize = OS.WindowSize;
+        var windowSize = DisplayServer.WindowGetSize();
         var targetCoordinates = new Vector2(GetCoordinate(coordinateX)*windowSize.x, (0.5f-GetCoordinate(coordinateY))*windowSize.y);
         return targetCoordinates;
     }
@@ -158,7 +158,7 @@ public partial class VisualNovelManager : Node
         var targetPosition = GetPosition(screenPosX, screenPosY);
         double elapsed = 0f;
 
-        var distance = targetPosition - actor.Rect.RectPosition;
+        var distance = targetPosition - actor.Rect.Position;
         if (moveTime > 0)
         {
             while (elapsed < moveTime)
@@ -168,12 +168,12 @@ public partial class VisualNovelManager : Node
                 // trying to normalize it based on framerate
                 var timeRatio = delta / moveTime;
                 var movement = new Vector2((float)timeRatio * distance.x, (float)timeRatio * distance.y);
-                actor.Rect.RectPosition += movement;
+                actor.Rect.Position += movement;
                 elapsed += delta;
                 await DefaultActions.Wait(delta); // wait a frame
             }
         }
-        actor.Rect.RectPosition = targetPosition; // fully snap to the final position
+        actor.Rect.Position = targetPosition; // fully snap to the final position
     }
 
     public void SetActor(string actorName, string spriteName, string positionX = "", string positionY = "", string colorHex = "")
@@ -182,16 +182,16 @@ public partial class VisualNovelManager : Node
         var rect = new TextureRect();
         AddChild(rect);
         newActor.Rect = rect;
-        var texture = ResourceLoader.Load<Texture>(spriteShortNameToPath[spriteName]);
+        var texture = ResourceLoader.Load<Texture2D>(spriteShortNameToPath[spriteName]);
         rect.Texture = texture;
         var originalSize = texture.GetSize();
-        var targetHeight = OS.WindowSize.y;
-        rect.RectMinSize = Vector2.Zero;
+        var targetHeight = DisplayServer.WindowGetSize().y;
+        rect.CustomMinimumSize = Vector2.Zero;
         var sizeRatio = originalSize.x / originalSize.y;
         // clamp the actor sprite size to the screen
-        rect.RectSize = new Vector2(targetHeight * sizeRatio, targetHeight);
+        rect.Size = new Vector2(targetHeight * sizeRatio, targetHeight);
         actors[actorName] = newActor;
-        rect.RectPosition = GetPosition(positionX, positionY);
+        rect.Position = GetPosition(positionX, positionY);
         MoveChild(rect, 1);
     }
 

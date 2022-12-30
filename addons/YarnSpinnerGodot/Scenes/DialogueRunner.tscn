@@ -1,27 +1,31 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=6 format=3 uid="uid://dqbd75d2sygjn"]
 
-[ext_resource path="res://addons/YarnSpinnerGodot/Runtime/InMemoryVariableStorage.cs" type="Script" id=1]
-[ext_resource path="res://addons/YarnSpinnerGodot/Runtime/Views/LineView.cs" type="Script" id=2]
-[ext_resource path="res://addons/YarnSpinnerGodot/Runtime/Views/OptionsListView.cs" type="Script" id=3]
-[ext_resource path="res://addons/YarnSpinnerGodot/Runtime/DialogueRunner.cs" type="Script" id=4]
-[ext_resource path="res://addons/YarnSpinnerGodot/Scenes/OptionView.tscn" type="PackedScene" id=6]
+[ext_resource type="Script" path="res://addons/YarnSpinnerGodot/Runtime/InMemoryVariableStorage.cs" id="1"]
+[ext_resource type="Script" path="res://addons/YarnSpinnerGodot/Runtime/Views/LineView.cs" id="2"]
+[ext_resource type="Script" path="res://addons/YarnSpinnerGodot/Runtime/Views/OptionsListView.cs" id="3"]
+[ext_resource type="Script" path="res://addons/YarnSpinnerGodot/Runtime/DialogueRunner.cs" id="4"]
+[ext_resource type="PackedScene" path="res://addons/YarnSpinnerGodot/Scenes/OptionView.tscn" id="6"]
 
 [node name="DialogueRunner" type="Control"]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 4 )
+script = ExtResource("4")
 variableStoragePath = NodePath("InMemoryVariableStorage")
-dialogueViewPaths = [ NodePath("LineView"), NodePath("OptionsListView") ]
+dialogueViewPaths = [NodePath("LineView"), NodePath("OptionsListView")]
 startNode = ""
 
 [node name="InMemoryVariableStorage" type="Node" parent="."]
-script = ExtResource( 1 )
+script = ExtResource("1")
 debugTextViewPath = NodePath("../VariableDebugText")
 
 [node name="VariableDebugText" type="RichTextLabel" parent="."]
+layout_mode = 0
 
 [node name="LineView" type="Control" parent="."]
-script = ExtResource( 2 )
+anchors_preset = 0
+script = ExtResource("2")
 viewControlPath = NodePath("ViewControl")
 useFadeEffect = false
 lineTextPath = NodePath("ViewControl/LineText")
@@ -31,73 +35,105 @@ typewriterEffectSpeed = 240.0
 continueButtonPath = NodePath("ViewControl/ContinueButton")
 
 [node name="ViewControl" type="Control" parent="LineView"]
+anchors_preset = 0
 
-[node name="LineText" type="RichTextLabel" parent="LineView/ViewControl"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = 57.0
-margin_top = 105.0
-margin_right = 943.0
-margin_bottom = 555.0
-bbcode_enabled = true
-bbcode_text = "The dialogue text should appear here!"
-text = "The dialogue text should appear here!"
-
-[node name="ColorRect" type="ColorRect" parent="LineView/ViewControl/LineText"]
-modulate = Color( 0.203922, 0.192157, 0.192157, 0.458824 )
+[node name="LineText Background" type="ColorRect" parent="LineView/ViewControl"]
+modulate = Color(0.203922, 0.192157, 0.192157, 0.458824)
 show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 57.0
+offset_top = 107.0
+offset_right = 1186.0
+offset_bottom = 607.0
 
-[node name="CharacterNameText" type="RichTextLabel" parent="LineView/ViewControl"]
-self_modulate = Color( 0.321569, 0.87451, 0.254902, 1 )
+[node name="LineText" type="RichTextLabel" parent="LineView/ViewControl"]
+layout_mode = 1
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = 58.0
-margin_top = 78.0
-margin_right = 944.0
-margin_bottom = 100.0
+offset_left = 57.0
+offset_top = 107.0
+offset_right = 1187.0
+offset_bottom = 855.0
+grow_horizontal = 2
+grow_vertical = 2
 bbcode_enabled = true
-bbcode_text = "Character Name"
+text = "The dialogue text should appear here!"
+scroll_active = false
+
+[node name="CharacterNameText" type="RichTextLabel" parent="LineView/ViewControl"]
+self_modulate = Color(0.321569, 0.87451, 0.254902, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 58.0
+offset_top = 78.0
+offset_right = 1187.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
 text = "Character Name"
+scroll_active = false
 
 [node name="ColorRect" type="ColorRect" parent="LineView/ViewControl/CharacterNameText"]
-modulate = Color( 0.203922, 0.192157, 0.192157, 0.458824 )
+modulate = Color(0.203922, 0.192157, 0.192157, 0.458824)
 show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="ContinueButton" type="Button" parent="LineView/ViewControl"]
+layout_mode = 1
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = 397.0
-margin_top = 467.0
-margin_right = 629.0
-margin_bottom = 567.0
+offset_left = 942.0
+offset_top = 645.0
+offset_right = 1174.0
+offset_bottom = 745.0
+grow_horizontal = 2
+grow_vertical = 0
 text = "Continue"
 
 [node name="OptionsListView" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 1192.0
+offset_top = 17.0
+offset_right = -82.0
+offset_bottom = -27.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
-script = ExtResource( 3 )
-optionViewPrefab = ExtResource( 6 )
+script = ExtResource("3")
+optionViewPrefab = ExtResource("6")
 lastLineTextPath = NodePath("../LineView/ViewControl/LineText")
 viewControlPath = NodePath("VBoxContainer")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="OptionsListView"]
+layout_mode = 1
+anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -265.0
-margin_top = -300.0
-margin_right = -105.0
-margin_bottom = 300.0
-rect_min_size = Vector2( 160, 0 )
+offset_left = -398.0
+offset_top = -421.0
+offset_right = -139.0
+offset_bottom = 440.0
+grow_horizontal = 0
+grow_vertical = 2
